@@ -1,9 +1,16 @@
 package com.noworries.scibots.noworries;
 
+import android.Manifest;
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -12,7 +19,7 @@ import android.widget.Toast;
  */
 
 public class BackToWork extends IntentService {
-    public  BackToWork(){
+    public BackToWork() {
         this(BackToWork.class.getName());
 
     }
@@ -26,15 +33,13 @@ public class BackToWork extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d("yo aniket is cool :", "Service Started!");
         showToast("Starting IntentService");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        finally {
-            showToast("Finishing IntentService");
-            Log.d("yo aniket is cool :", "Service ended!");
-        }
+
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            LocationListener locationListener = new MylocationListner();
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
     }
     protected void showToast(final String msg){
