@@ -14,6 +14,9 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by aniket sharma on 11-03-2017.
  */
@@ -40,6 +43,15 @@ public class BackToWork extends IntentService {
                 return;
             }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        new Timer().schedule(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                //code that runs when timer is done
+                Log.d("fuck off----", "still fuck off");
+            }
+        }, 1000);
 
     }
     protected void showToast(final String msg){

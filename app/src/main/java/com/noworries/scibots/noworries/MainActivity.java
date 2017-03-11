@@ -13,6 +13,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -31,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
 //        Location l1 = (Location)  locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 //        Log.d("",l1.toString());
 //        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
         Intent ss = new Intent(this,BackToWork.class);
         startService(ss);
+
 
 }}
