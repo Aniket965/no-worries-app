@@ -2,6 +2,7 @@ package com.noworries.scibots.noworries;
 
 import android.Manifest;
 import android.app.IntentService;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,6 +12,7 @@ import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -42,7 +44,7 @@ public class BackToWork extends IntentService {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         new Timer().schedule(new TimerTask()
         {
             @Override
@@ -50,8 +52,15 @@ public class BackToWork extends IntentService {
             {
                 //code that runs when timer is done
                 Log.d("fuck off----", "still fuck off");
+                NotificationCompat.Builder mbuilder =  new
+                        NotificationCompat.Builder(getApplicationContext())
+                        .setSmallIcon(R.mipmap.ic_launcher).setContentTitle("title")
+                        .setContentText("aniket is cooler now");
+                NotificationManager mNotifyMgr =
+                        (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                mNotifyMgr.notify(001,mbuilder.build());
             }
-        }, 1000);
+        }, 1000*60*60*1);
 
     }
     protected void showToast(final String msg){

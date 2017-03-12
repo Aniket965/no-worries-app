@@ -20,10 +20,11 @@ import java.util.Locale;
 public class MylocationListner implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
+
         String longitude = "Longitude: " + location.getLongitude();
-        Log.v("lng ", longitude);
+        Log.d("lng ", longitude);
         String latitude = "Latitude: " + location.getLatitude();
-        Log.v("lat", latitude);
+        Log.d("lat", latitude);
     }
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
