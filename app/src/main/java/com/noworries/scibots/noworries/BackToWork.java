@@ -1,6 +1,7 @@
 package com.noworries.scibots.noworries;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -13,6 +14,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,6 +27,8 @@ import java.util.TimerTask;
  */
 
 public class BackToWork extends IntentService {
+    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 0;
+
     public BackToWork() {
         this(BackToWork.class.getName());
 
@@ -52,15 +57,31 @@ public class BackToWork extends IntentService {
             {
                 //code that runs when timer is done
                 Log.d("fuck off----", "still fuck off");
+
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage("9899023974", null, "aniket is cool boy", null, null);
+                    Toast.makeText(getApplicationContext(), "SMS sent.",
+                            Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage("9899023974", null, "aniket is cool boy", null, null);
+
+                }
+
                 NotificationCompat.Builder mbuilder =  new
                         NotificationCompat.Builder(getApplicationContext())
                         .setSmallIcon(R.mipmap.ic_launcher).setContentTitle("title")
                         .setContentText("aniket is cooler now");
+
                 NotificationManager mNotifyMgr =
                         (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 mNotifyMgr.notify(001,mbuilder.build());
             }
-        }, 1000*60*60*1);
+        }, 1000*60);
 
     }
     protected void showToast(final String msg){
